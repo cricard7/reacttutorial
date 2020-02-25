@@ -54,6 +54,7 @@ class App extends Component {
 
   render() {
 
+    //defining CSS locally.
     const style = {
       backgroundColor: 'green'
     }
@@ -64,23 +65,32 @@ class App extends Component {
 
     if(this.state.showPersons){
       //we can render UI in this check and assign to a variable
+      //we are also dynamically rendering multiple items for state in to a list of persons
 
       persons = (
             <div>
+              
+              {this.state.persons.map(person => {
+                return <Person
+                name = {person.name}
+                age = {person.age}
                 
-            <Person name={this.state.persons[0].name} age={this.state.persons[0].age}>Hobbies: Racing</Person>
+                />
+              })}
+              
+              <Person name={this.state.persons[0].name} age={this.state.persons[0].age}>Hobbies: Racing</Person>
 
-            {// Passing in a handler to change the name of the second person
-            }
-            <Person changed={this.nameChangedHandler} name={this.state.persons[1].name} age={this.state.persons[1].age}></Person>
-            {
-              //passing a method down to a component - click is passed in as a prop. The click then passes a value up to the switchHandler
-            }
-            <Person 
-            name={this.state.persons[2].name} age={this.state.persons[2].age}
-            click={this.switchHandler.bind(this, 'STEPH!')}
-            >
-            </Person> 
+              {// Passing in a handler to change the name of the second person
+              }
+              <Person changed={this.nameChangedHandler} name={this.state.persons[1].name} age={this.state.persons[1].age}></Person>
+              {
+                //passing a method down to a component - click is passed in as a prop. The click then passes a value up to the switchHandler
+              }
+              <Person 
+              name={this.state.persons[2].name} age={this.state.persons[2].age}
+              click={this.switchHandler.bind(this, 'STEPH!')}
+              >
+              </Person> 
             </div>
       )
 

@@ -14,7 +14,7 @@ class App extends Component {
     { name: 'Manu', age: 29},
     { name: 'Stephanie', age: 26}
     ],
-    showPersons: false
+    showPersons: false // toggle to show and hide content of persons
   }
 
   switchHandler = (newName) =>{
@@ -40,7 +40,16 @@ class App extends Component {
         { name: event.target.value, age: 29},
         { name: 'Stephanie', age: 27}
       ]
+      
     })
+  }
+
+
+  // how to conditionally show content
+
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow})
   }
 
   render() {
@@ -48,21 +57,17 @@ class App extends Component {
     const style = {
       backgroundColor: 'green'
     }
+    
+    //conditionally show content before the return. See referecne to persons in the return (JSX)
 
-    return (
-      <div className="App">
-        <h1 style={style}>Hi Im a react app</h1>
-        <Button variant="contained" onClick={this.switchHandler.bind(this, 'Max!!!')}>Switch name</Button>
-        {
-          //Alternative syntax. This syntax can cause issues with rerendering  
-          //<button onClick={() => this.switchHandler('Max!!!')}>Switch name</button>
+    let persons = null
 
-        }
-        {
-          //conditionally showing elements - wrap in brackets
-        }
-      
-          <div>
+    if(this.state.showPersons){
+      //we can render UI in this check and assign to a variable
+
+      persons = (
+            <div>
+                
             <Person name={this.state.persons[0].name} age={this.state.persons[0].age}>Hobbies: Racing</Person>
 
             {// Passing in a handler to change the name of the second person
@@ -76,10 +81,34 @@ class App extends Component {
             click={this.switchHandler.bind(this, 'STEPH!')}
             >
             </Person> 
-
             </div>
+      )
 
+    }
+
+
+    return (
+      <div className="App">
+        <h1 style={style}>Hi Im a react app</h1>
+        <Button variant="contained" onClick={this.switchHandler.bind(this, 'Max!!!')}>Switch name</Button>
+        <Button variant="contained" onClick={this.togglePersonsHandler}>Toggle Persons</Button>
+      <div>showPersons: {this.state.showPersons.toString()} </div>
+
+        {
+          //Alternative syntax. This syntax can cause issues with rerendering  
+          //<button onClick={() => this.switchHandler('Max!!!')}>Switch name</button>
+
+        }
+        {
+          //conditionally showing elements
+          /*
+           One Option
+          */
+        }
+
+        {persons}
        
+         
       </div>
     );
   }
